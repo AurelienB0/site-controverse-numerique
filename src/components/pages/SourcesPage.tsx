@@ -1,4 +1,6 @@
+import React from "react";
 import img5 from "../../styles/AIA.jpeg";
+
 export function SourcesPage() {
   const bibliography = [
     "Adetimirin, Oore. « Is Central Bank Digital Currency the Future of Fraud Prevention? » Featurespace, 19 avril 2024. https://www.featurespace.com/newsroom/is-central-bank-digital-currency-the-future-of-fraud-prevention.",
@@ -39,14 +41,20 @@ export function SourcesPage() {
           <h2 className="pb-0 text-indigo-700">Bibliographie</h2>
         </div>
         <div className="space-y-4 bg-white rounded-lg p-8 border border-gray-200 shadow-sm">
-          {bibliography.map((ref, index) => (
-            <p
-              key={index}
-              className="text-foreground/80 text-sm leading-relaxed pl-6 -indent-6"
-            >
-              {ref}
-            </p>
-          ))}
+          {bibliography.map((ref, index) => {
+            const anchorId = ref.split(" ")[0].replace(",", "");
+
+            return (
+              <p
+                key={index}
+                id={anchorId}
+                className="text-foreground/80 text-sm leading-relaxed pl-6 -indent-6 scroll-mt-32 target:bg-yellow-50 target:ring-2 target:ring-indigo-100 rounded p-1 transition-colors duration-500"
+                style={{ scrollMargin: 280 }}
+              >
+                {ref}
+              </p>
+            );
+          })}
         </div>
       </section>
 
@@ -56,7 +64,16 @@ export function SourcesPage() {
           <h2 className="pb-0 text-indigo-700">
             Utilisation d'intelligence artificielle
           </h2>
-          <img src={img5} style={{ width: "3%", right:400, alignSelf:'flex-end', position:'absolute'}} />
+          <img
+            src={img5}
+            alt="AIA"
+            style={{
+              width: "3%",
+              right: 400,
+              alignSelf: "flex-end",
+              position: "absolute",
+            }}
+          />
         </div>
         <div className="bg-white rounded-lg p-8 border-l-4 border-indigo-600 shadow-sm">
           <p className="text-foreground/80 leading-relaxed">
