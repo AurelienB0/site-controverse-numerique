@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 // Assuming you have these imports for your routing
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import img1 from "../../styles/1.png";
 import img2 from "../../styles/2.png";
 import img3 from "../../styles/3.png";
 import img4 from "../../styles/4.png";
 // --- NEW IMPORT: CHANGE THIS TO YOUR ACTUAL AUDIO FILE NAME ---
-import audioFile from "../../styles/interview.mp3"
+import audioFile from "../../styles/interview.mp3";
 
 // --- DATA: EXPERTS INTERNATIONAUX ---
 const INTERNATIONAL_EXPERTS = [
@@ -173,9 +174,9 @@ export const SourceLinks = ({ sources }: { sources: string }) => {
       {names.map((name, i) => (
         <span key={i}>
           <a
-            href={`/sources#${name.split(" ")[0]}`}
+            href={`/#/sources#${name.split(" ")[0]}`}
             className="text-indigo-600 hover:text-indigo-800 hover:underline font-medium transition-colors"
-            style={{color:'#2239b8ff'}}
+            style={{ color: "#2239b8ff" }}
           >
             {name}
           </a>
@@ -187,9 +188,37 @@ export const SourceLinks = ({ sources }: { sources: string }) => {
 };
 
 export function ExpertPage() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // 1. Get the actual ID from the end of the URL
+    // This splits by '#' and takes the last part (e.g., 'frise')
+    const hashParts = window.location.href.split('#');
+    const id = hashParts.length > 2 ? hashParts[hashParts.length - 1] : null;
+
+    if (id) {
+      // 2. Try to find the element
+      const element = document.getElementById(id);
+
+      if (element) {
+        // 3. Small timeout to ensure the DOM is fully ready
+        setTimeout(() => {
+          const fixedHeaderOffset = -120; // Adjust this for your header height
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - fixedHeaderOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }, 150); // Increased timeout slightly for reliability
+      }
+    }
+  }, [location]); // Re-runs every time the location (and hash) changes
+
+  
   return (
     <div className="space-y-20 max-w-5xl mx-auto px-4 py-8">
-      
       {/* SECTION 1: INTERVIEW */}
       <section id="interview" className="scroll-mt-48">
         <div className="flex items-center gap-3 mb-6">
@@ -214,19 +243,21 @@ export function ExpertPage() {
               a permis de mieux comprendre les enjeux techniques et sociétaux de
               cette technologie émergente.
             </p>
-            
+
             {/* --- AUDIO PLAYER ADDITION --- */}
             <div className="mt-6 pt-6 border-t border-gray-100">
-                <h4 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                    🎧 Écouter l'entretien complet
-                </h4>
-                <audio controls className="w-full h-10 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500">
-                    <source src={audioFile} type="audio/mpeg" />
-                    Votre navigateur ne supporte pas l'élément audio.
-                </audio>
+              <h4 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                🎧 Écouter l'entretien complet
+              </h4>
+              <audio
+                controls
+                className="w-full h-10 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <source src={audioFile} type="audio/mpeg" />
+                Votre navigateur ne supporte pas l'élément audio.
+              </audio>
             </div>
             {/* ----------------------------- */}
-
           </div>
         </div>
       </section>
@@ -349,7 +380,7 @@ export function ExpertPage() {
                   <span className="font-semibold not-italic text-gray-400 uppercase tracking-wider text-[10px] mr-2">
                     Source:
                   </span>
-                  <SourceLinks sources={actor.source}/>
+                  <SourceLinks sources={actor.source} />
                 </p>
               </div>
             </div>

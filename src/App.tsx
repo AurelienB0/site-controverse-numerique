@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, HashRouter } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
 import { LeftSidebar } from './components/LeftSidebar';
@@ -60,8 +60,8 @@ function AppContent() {
 
 export default function App() {
   return (
-    <Router>
+    <HashRouter>
       <AppContent />
-    </Router>
+    </HashRouter>
   );
 }

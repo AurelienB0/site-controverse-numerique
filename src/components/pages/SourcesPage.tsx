@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom"; // Import useLocation
 import img5 from "../../styles/AIA.jpeg";
 
 export function SourcesPage() {
+  const location = useLocation(); // Hook to track the current URL
+
+  // This effect runs every time the URL changes
+  useEffect(() => {
+    // Check if there is a hash in the URL (e.g., #Sebti)
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      const element = document.getElementById(id);
+
+      if (element) {
+        // Use a small timeout to ensure the element is rendered
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+      }
+    }
+  }, [location]);
+
   const bibliography = [
     "Adetimirin, Oore. « Is Central Bank Digital Currency the Future of Fraud Prevention? » Featurespace, 19 avril 2024. https://www.featurespace.com/newsroom/is-central-bank-digital-currency-the-future-of-fraud-prevention.",
     "Baubeau, Patrice. « L'identification, la quatrième fonction de la monnaie ». The Conversation, 19 août 2021. https://doi.org/10.64628/AAK.j3qwjc67h.",
@@ -44,14 +63,17 @@ export function SourcesPage() {
         </div>
         <div className="space-y-4 bg-white rounded-lg p-8 border border-gray-200 shadow-sm">
           {bibliography.map((ref, index) => {
+            // Extracts the first word (usually the author's last name) to create an ID anchor
+            // e.g. "Adetimirin, Oore..." becomes id="Adetimirin"
             const anchorId = ref.split(" ")[0].replace(",", "");
 
             return (
               <p
                 key={index}
                 id={anchorId}
-                className="text-foreground/80 text-sm leading-relaxed pl-6 -indent-6 scroll-mt-32 target:bg-yellow-50 target:ring-2 target:ring-indigo-100 rounded p-1 transition-colors duration-500"
-                style={{ scrollMargin: 280 }}
+                // 'scroll-mt-32' helps offset the fixed header when using CSS scrolling
+                // 'target:...' styles highlight the text when linked
+                className="text-foreground/80 text-sm leading-relaxed pl-6 -indent-6 scroll-mt-32 target:bg-yellow-100 target:p-2 target:rounded transition-colors duration-500"
               >
                 {ref}
               </p>
