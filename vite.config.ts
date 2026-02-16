@@ -19,7 +19,7 @@ import react from '@vitejs/react-swc'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/site-controverse-numerique/', // <--- Très important : mets exactement le nom du repo
+  base: '/site-controverse-numerique/', 
 })
 
 function removeVersionSpecifiers(): Plugin {
