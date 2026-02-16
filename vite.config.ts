@@ -14,8 +14,6 @@ import tailwindcss from '@tailwindcss/vite'
  *   import { Slot } from "@radix-ui/react-slot";
  */
 
-import { defineConfig } from 'vite'
-import react from '@vitejs/react-swc'
 
 export default defineConfig({
   plugins: [react()],
@@ -61,14 +59,14 @@ function figmaAssetsResolver(): Plugin {
 
 const produceSingleFile = process.env.SINGLE_FILE === 'true'
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(), 
-    figmaAssetsResolver(), 
-    removeVersionSpecifiers(), 
-    ...(produceSingleFile ? [viteSingleFile()] : [])
-  ],
-})
+// // https://vite.dev/config/
+// export default defineConfig({
+//   plugins: [
+//     react(),
+//     tailwindcss(), 
+//     figmaAssetsResolver(), 
+//     removeVersionSpecifiers(), 
+//     ...(produceSingleFile ? [viteSingleFile()] : [])
+//   ],
+// })
 
