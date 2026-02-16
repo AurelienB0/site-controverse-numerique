@@ -14,6 +14,14 @@ import tailwindcss from '@tailwindcss/vite'
  *   import { Slot } from "@radix-ui/react-slot";
  */
 
+import { defineConfig } from 'vite'
+import react from '@vitejs/react-swc'
+
+export default defineConfig({
+  plugins: [react()],
+  base: '/site-controverse-num-rique/', // <--- AJOUTEZ CETTE LIGNE
+})
+
 function removeVersionSpecifiers(): Plugin {
   const VERSION_PATTERN = /@\d+\.\d+\.\d+/;
 
